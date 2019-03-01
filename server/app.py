@@ -1,5 +1,6 @@
+from collections import defaultdict
 from bs4 import BeautifulSoup
-from flask import Flask, abort
+from flask import Flask, abort, jsonify
 import requests
 
 app = Flask(__name__)
@@ -22,5 +23,22 @@ def load_debug_athlete_data():
 @app.route('/athlete/<id>')
 def get_athlete_data(id):
     html = load_debug_athlete_data() if app.config['DEBUG'] else fetch_athlete_data(id)
+
     soup = BeautifulSoup(html, 'html.parser')
-    return soup.h2.get_text()
+    trs = soup.select('#cphBody_pnlPerformances .alternatingrowspanel tr')
+
+    performances_by_event = defaultdict(list)
+    for tr in trs:
+        tds = tr.contents
+        if len(tds) == 1:
+            continue
+
+        event = tds[0].get_text()
+        if 'Event' == event:
+            continue
+
+        performances_by_event[event].append({
+            'performance': tds[1].get_text(),
+            'date': tds[11].get_text()
+        })
+    return jsonify(performances_by_event)
