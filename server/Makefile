@@ -6,3 +6,6 @@ dev:
 
 lint:
 	pylint *.py
+
+test:
+	python -m unittest tests/*

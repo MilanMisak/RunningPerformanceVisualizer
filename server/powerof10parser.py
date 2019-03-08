@@ -33,11 +33,6 @@ def parse_time(performance_str):
 
     return secs
 
-# TODO - set up tests
-print(parse_time('12.98') == 12.98)
-print(parse_time('77:30') == 4650)
-print(parse_time('2:32:56') == 9176)
-
 
 def parse_position(position_str):
     '''
