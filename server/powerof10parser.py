@@ -1,34 +1,37 @@
+'''
+Power of 10 data parser for extracting performances of an athlete.
+'''
+
 from collections import defaultdict
 from datetime import datetime
 import re
 from bs4 import BeautifulSoup
-from dateutil.parser import parse
 
 TIME_REGEX = r'((?P<hours>\d+):)*?((?P<minutes>\d+):)?(?P<seconds>\d+)(\.(?P<frac>\d+))?$'
 
-'''
-Parses performance (time) string such as 12.98, 77:30 or 2:32:56
-and returns the number of seconds it corresponds to.
-'''
 def parse_time(performance_str):
+    '''
+    Parses performance (time) string such as 12.98, 77:30 or 2:32:56
+    and returns the number of seconds it corresponds to.
+    '''
     m = re.match(TIME_REGEX, performance_str.strip())
     if not m:
         return None
 
     groups = m.groupdict()
 
-    n = int(groups['seconds'])
+    secs = int(groups['seconds'])
 
     if groups['frac'] is not None:
-        n += int(groups['frac']) / (10 ** len(groups['frac']))
-    
-    if groups['minutes'] is not None:
-        n += int(groups['minutes']) * 60
-    
-    if groups['hours'] is not None:
-        n += int(groups['hours']) * (60 ** 2)
+        secs += int(groups['frac']) / (10 ** len(groups['frac']))
 
-    return n
+    if groups['minutes'] is not None:
+        secs += int(groups['minutes']) * 60
+
+    if groups['hours'] is not None:
+        secs += int(groups['hours']) * (60 ** 2)
+
+    return secs
 
 # TODO - set up tests
 print(parse_time('12.98') == 12.98)
@@ -37,11 +40,19 @@ print(parse_time('2:32:56') == 9176)
 
 
 def parse_position(position_str):
+    '''
+    Parses position string and returns position (ignores letter suffixes such as
+    'm' in '12m').
+    '''
     m = re.match(r'\d+', position_str)
     return int(m[0]) if m else None
 
 
 def parse_html(html):
+    '''
+    Parses a Power of 10 athlete page HTML string and returns a map
+    of performances by event.
+    '''
     soup = BeautifulSoup(html, 'html.parser')
     trs = soup.select('#cphBody_pnlPerformances .alternatingrowspanel tr')
 
@@ -52,11 +63,11 @@ def parse_html(html):
             continue
 
         event = tds[0].get_text()
-        if 'Event' == event:
+        if event == 'Event':
             continue
 
         date_str = tds[11].get_text()
-        date = datetime.strptime(tds[11].get_text(), '%d %b %y').strftime('%Y-%m-%d')
+        date = datetime.strptime(date_str, '%d %b %y').strftime('%Y-%m-%d')
         time_str = tds[1].get_text()
         position_str = tds[5].get_text()
         position = parse_position(position_str)
