@@ -1,6 +1,7 @@
 import React from 'react';
 import parse from 'date-fns/parse';
 import getYear from 'date-fns/get_year';
+import {compareDistance} from '../utils';
 import './EventBreakdown.scss';
 
 const renderPerformanceTime = performance => performance && performance.time_str;
@@ -13,7 +14,7 @@ const renderPerformanceTime = performance => performance && performance.time_str
 const createHeatmapGenerator = (bestTime, worstTime) => {
 	return performance => {
 		if (!performance) {
-			return 'hsl(205, 0%, 98%)';
+			return 'hsl(205, 0%, 95%)';
 		}
 		const frac = worstTime === bestTime ? 0 : (performance.time - bestTime) / (worstTime - bestTime);
 		return `hsl(205, 100%, ${frac * 50 + 50}%)`;
@@ -66,35 +67,55 @@ export default ({performances}) => {
 	// Get an array of years in the range in descending order
 	const years = [...Array(maxYear - minYear + 1).keys()].map(year => maxYear - year);
 
-	return <div className="event-breakdown box">
+	// Get a sorted list of events by distance
+	const events = Object.keys(performances).sort(compareDistance);
+
+	return <div className="event-breakdown">
 		<h4 className="title is-4">Event Breakdown by Year</h4>
 		<h6 className="subtitle is-6">Click on an event name to plot times</h6>
 
-		<table className="table is-bordered">
-			<thead>
-				<tr>
-					<th>Event</th>
-					<th>Best</th>
-					<th>Last</th>
-					{years.map(year => <th key={year}>{year}</th>)}
-				</tr>
-			</thead>
-			<tbody>
-				{Object.keys(performances).sort().map(ev => {
-					const getBackground = createHeatmapGenerator(bestByEvent[ev].time, worstByEvent[ev].time);
-					return <tr key={ev}>
-						<td>{ev}</td>
-						<td>{renderPerformanceTime(bestByEvent[ev])}</td>
-						<td>{renderPerformanceTime(lastByEvent[ev])}</td>
-						{years.map(year => {
-							const performance = bestByEventAndYear[ev] && bestByEventAndYear[ev][year];
-							return <td key={year} style={{backgroundColor: getBackground(performance)}}>
-								{renderPerformanceTime(performance)}
-							</td>;
+		<div className="tables">
+			<div>
+				<table className="table is-bordered">
+					<thead>
+						<tr>
+							<th>Event</th>
+							<th>Best</th>
+						</tr>
+					</thead>
+					<tbody>
+						{events.map(ev => <tr key={ev}>
+							<td className="header">{ev}</td>
+							<td className="header-light">{renderPerformanceTime(bestByEvent[ev])}</td>
+						</tr>)}
+					</tbody>
+				</table>
+			</div>
+
+			<div>
+				<table className="table is-bordered">
+					<thead>
+						<tr>
+							<th className="header-light">Last</th>
+							{years.map(year => <th key={year}>{year}</th>)}
+						</tr>
+					</thead>
+					<tbody>
+						{events.map(ev => {
+							const getBackground = createHeatmapGenerator(bestByEvent[ev].time, worstByEvent[ev].time);
+							return <tr key={ev}>
+								<td className="header-light">{renderPerformanceTime(lastByEvent[ev])}</td>
+								{years.map(year => {
+									const performance = bestByEventAndYear[ev] && bestByEventAndYear[ev][year];
+									return <td key={year} style={{backgroundColor: getBackground(performance)}}>
+										{renderPerformanceTime(performance)}
+									</td>;
+								})}
+							</tr>;
 						})}
-					</tr>;
-				})}
-			</tbody>
-		</table>
+					</tbody>
+				</table>
+			</div>
+		</div>
 	</div>;
 };

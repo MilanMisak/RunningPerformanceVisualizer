@@ -1,20 +1,31 @@
 @charset "utf-8";
 
 .event-breakdown {
-	overflow-x: auto;
+	.tables {
+		display: flex;
+
+		& > :first-child {
+			flex: 0 0 auto;
+		}
+
+		& > :last-child {
+			flex: 1;
+			overflow-x: auto;
+		}
+	}
 
 	th, td {
-		&:not(:first-child) {
+		&:not(.header) {
 			text-align: right;
 		}
 	}
 
-	th, td:first-child {
-		background-color: hsl(71, 64%, 94%);
+	th, td.header {
+		background-color: hsl(71, 64%, 90%);
 		font-weight: bold;
 	}
 
-	td:nth-child(2), td:nth-child(3) {
-		background-color: hsl(71, 64%, 98%);
+	td.header-light {
+		background-color: hsl(71, 64%, 95%);
 	}
 }
