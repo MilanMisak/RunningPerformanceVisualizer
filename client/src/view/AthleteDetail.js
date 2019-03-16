@@ -1,6 +1,7 @@
 import React from 'react';
 import parse from 'date-fns/parse';
 import getYear from 'date-fns/get_year';
+import './AthleteDetail.scss';
 
 const YearByEventTable = ({performances}) => {
 	// Find the earliest and latest year with any performances
@@ -44,7 +45,7 @@ const YearByEventTable = ({performances}) => {
 };
 
 export default React.memo(({performances}) => {
-	return <div>
+	return <div className="athlete-detail">
 		<YearByEventTable performances={performances} />
 	</div>;
 });
