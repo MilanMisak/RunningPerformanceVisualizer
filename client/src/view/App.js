@@ -2,21 +2,21 @@ import React, {Fragment} from 'react';
 import AthleteDetail from './AthleteDetail';
 import './App.scss';
 
-const Header = () => <section class="hero is-dark">
-	<div class="hero-body">
-		<div class="container">
-			<h1 class="title">
+const Header = () => <section className="hero is-dark">
+	<div className="hero-body">
+		<div className="container">
+			<h1 className="title">
 				Running Performance Visualizer
 			</h1>
-			<h2 class="subtitle">
+			<h2 className="subtitle">
 				Using Power of 10 data
 			</h2>
 		</div>
 	</div>
 </section>;
 
-const Footer = () => <footer class="footer">
-	<div class="content has-text-centered">
+const Footer = () => <footer className="footer">
+	<div className="content has-text-centered">
 		<p>
 		<strong>Running Performance Visualizer</strong> by Milan Misak
 		</p>
@@ -25,6 +25,8 @@ const Footer = () => <footer class="footer">
 
 export default ({performances}) => <Fragment>
 	<Header />
-	<AthleteDetail performances={performances} />
+	<main className="container">
+		<AthleteDetail performances={performances} />
+	</main>
 	<Footer />
 </Fragment>;

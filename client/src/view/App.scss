@@ -1,5 +1,12 @@
 @charset "utf-8";
 
+$body-background-color: hsl(0, 0%, 90%);
 $footer-padding: 2rem 1.5rem 1.5rem;
+$table-cell-padding: 0.25em 0.3em;
 
 @import "~bulma/bulma";
+
+main {
+	padding: 20px;
+	background-color: hsl(0, 0%, 98%);
+}

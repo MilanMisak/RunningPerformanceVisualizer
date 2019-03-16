@@ -1,0 +1,20 @@
+@charset "utf-8";
+
+.event-breakdown {
+	overflow-x: auto;
+
+	th, td {
+		&:not(:first-child) {
+			text-align: right;
+		}
+	}
+
+	th, td:first-child {
+		background-color: hsl(71, 64%, 94%);
+		font-weight: bold;
+	}
+
+	td:nth-child(2), td:nth-child(3) {
+		background-color: hsl(71, 64%, 98%);
+	}
+}
