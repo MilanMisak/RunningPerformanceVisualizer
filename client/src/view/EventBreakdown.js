@@ -15,13 +15,14 @@ const createHeatmapGenerator = (bestTime, worstTime) => {
 	return performance => {
 		if (!performance) {
 			return {
-				backgroundColor: 'hsl(205, 0%, 95%)'
+				backgroundColor: 'hsl(34, 0%, 95%)'
 			};
 		}
 		const frac = worstTime === bestTime ? 0 : (performance.time - bestTime) / (worstTime - bestTime);
 		return {
-			backgroundColor: `hsl(205, 100%, ${frac * 50 + 40}%)`,
-			color: frac > 0.4 ? '#363636' : '#e4e4e4'
+			backgroundColor: `hsl(34, ${(1 - frac) * 50 + 50}%, ${frac * 40 + 50}%)`,
+			color: '#363636',
+			fontWeight: performance.time === bestTime ? 'bold' : null
 		};
 	};
 };
