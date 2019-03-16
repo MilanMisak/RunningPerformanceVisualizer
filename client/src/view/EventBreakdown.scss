@@ -1,5 +1,7 @@
 @charset "utf-8";
 
+@import "./constants";
+
 .event-breakdown {
 	.tables {
 		display: flex;
@@ -14,18 +16,22 @@
 		}
 	}
 
-	th, td {
-		&:not(.header) {
-			text-align: right;
+	.table {
+		th, td {
+			border-color: $main-background-color;
+
+			&:not(.header) {
+				text-align: right;
+			}
 		}
-	}
 
-	th, td.header {
-		background-color: hsl(71, 64%, 90%);
-		font-weight: bold;
-	}
+		th, td.header {
+			background-color: hsl(71, 64%, 90%);
+			font-weight: bold;
+		}
 
-	td.header-light {
-		background-color: hsl(71, 64%, 95%);
+		td.header-light {
+			background-color: hsl(71, 64%, 95%);
+		}
 	}
 }
