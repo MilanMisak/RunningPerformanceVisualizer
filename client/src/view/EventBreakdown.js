@@ -14,10 +14,15 @@ const renderPerformanceTime = performance => performance && performance.time_str
 const createHeatmapGenerator = (bestTime, worstTime) => {
 	return performance => {
 		if (!performance) {
-			return 'hsl(205, 0%, 95%)';
+			return {
+				backgroundColor: 'hsl(205, 0%, 95%)'
+			};
 		}
 		const frac = worstTime === bestTime ? 0 : (performance.time - bestTime) / (worstTime - bestTime);
-		return `hsl(205, 100%, ${frac * 50 + 50}%)`;
+		return {
+			backgroundColor: `hsl(205, 100%, ${frac * 50 + 50}%)`,
+			color: frac > 0.5 ? '#363636' : '#e4e4e4'
+		};
 	};
 };
 
@@ -102,12 +107,12 @@ export default ({performances}) => {
 					</thead>
 					<tbody>
 						{events.map(ev => {
-							const getBackground = createHeatmapGenerator(bestByEvent[ev].time, worstByEvent[ev].time);
+							const getHeatmapStyle = createHeatmapGenerator(bestByEvent[ev].time, worstByEvent[ev].time);
 							return <tr key={ev}>
 								<td className="header-light">{renderPerformanceTime(lastByEvent[ev])}</td>
 								{years.map(year => {
 									const performance = bestByEventAndYear[ev] && bestByEventAndYear[ev][year];
-									return <td key={year} style={{backgroundColor: getBackground(performance)}}>
+									return <td key={year} style={getHeatmapStyle(performance)}>
 										{renderPerformanceTime(performance)}
 									</td>;
 								})}
