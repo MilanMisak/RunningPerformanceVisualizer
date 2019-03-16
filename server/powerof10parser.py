@@ -61,6 +61,10 @@ def parse_html(html):
         if event == 'Event':
             continue
 
+        if event.endswith('XC') or event.endswith('L') or event.startswith('JT'):
+            # Ignore cross country, relays (with odd distances) and javelin throw?
+            continue
+
         date_str = tds[11].get_text()
         date = datetime.strptime(date_str, '%d %b %y').strftime('%Y-%m-%d')
         time_str = tds[1].get_text()

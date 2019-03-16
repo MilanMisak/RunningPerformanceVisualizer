@@ -43,4 +43,6 @@ def get_athlete_performances(athlete_id):
     Returns performance data for an athlete.
     '''
     html = load_debug_athlete_data() if APP.config['DEBUG'] else fetch_athlete_data(athlete_id)
-    return jsonify(parse_html(html))
+    response = jsonify(parse_html(html))
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    return response
