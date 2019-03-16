@@ -26,12 +26,16 @@
 		}
 
 		th, td.header {
-			background-color: hsl(71, 64%, 90%);
+			background-color: hsl($primary-hue, 64%, 90%);
 			font-weight: bold;
 		}
 
 		td.header-light {
-			background-color: hsl(71, 64%, 95%);
+			background-color: hsl($primary-hue, 64%, 95%);
+		}
+
+		td.selected {
+			background-color: hsl($primary-hue, 90%, 60%);
 		}
 	}
 }

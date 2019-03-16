@@ -20,8 +20,8 @@ const createHeatmapGenerator = (bestTime, worstTime) => {
 		}
 		const frac = worstTime === bestTime ? 0 : (performance.time - bestTime) / (worstTime - bestTime);
 		return {
-			backgroundColor: `hsl(205, 100%, ${frac * 50 + 50}%)`,
-			color: frac > 0.5 ? '#363636' : '#e4e4e4'
+			backgroundColor: `hsl(205, 100%, ${frac * 50 + 40}%)`,
+			color: frac > 0.4 ? '#363636' : '#e4e4e4'
 		};
 	};
 };
@@ -84,7 +84,7 @@ export default ({performances}) => {
 				<table className="table is-bordered">
 					<thead>
 						<tr>
-							<th>Event</th>
+							<th className="header">Event</th>
 							<th>Best</th>
 						</tr>
 					</thead>

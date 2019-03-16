@@ -2,7 +2,7 @@ import React, {Fragment} from 'react';
 import AthleteDetail from './AthleteDetail';
 import './App.scss';
 
-const Header = () => <section className="hero is-dark">
+const Header = () => <section className="hero is-primary">
 	<div className="hero-body">
 		<div className="container">
 			<h1 className="title">

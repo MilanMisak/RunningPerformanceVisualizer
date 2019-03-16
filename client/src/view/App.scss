@@ -1,11 +1,14 @@
 @charset "utf-8";
 
+@import "./constants";
+
 $body-background-color: hsl(0, 0%, 90%);
 $footer-padding: 2rem 1.5rem 1.5rem;
 $table-cell-padding: 0.25em 0.3em;
+$primary: hsl($primary-hue, 90%, 51%);
+$primary-invert: hsl($primary-hue, 50%, 10%);
 
 @import "~bulma/bulma";
-@import "./constants";
 
 main {
 	padding: 20px;
