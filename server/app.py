@@ -2,7 +2,7 @@
 Application server that provides performance data for athletes.
 '''
 
-from flask import Flask, abort, jsonify
+from flask import Flask, abort, jsonify, send_from_directory
 import requests
 from .powerof10parser import parse_html
 
@@ -37,7 +37,12 @@ def load_debug_athlete_data():
         return f.read()
 
 
-@APP.route('/athlete/<athlete_id>')
+@APP.route('/<path:path>')
+def get_static_file(path):
+    return send_from_directory('../client/dist', path)
+
+
+@APP.route('/api/athlete/<athlete_id>')
 def get_athlete_data(athlete_id):
     '''
     Returns personal and performance data for an athlete.
