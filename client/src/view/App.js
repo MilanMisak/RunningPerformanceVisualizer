@@ -1,32 +1,66 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useState} from 'react';
 import AthleteDetail from './AthleteDetail';
 import './App.scss';
 
-const Header = () => <section className="hero is-primary is-bold">
-	<div className="hero-body">
-		<div className="container">
-			<h1 className="title">
-				Running Performance Visualizer
-			</h1>
-			<h2 className="subtitle">
-				Using Power of 10 data
-			</h2>
-		</div>
-	</div>
+const SearchForm = ({onSearch}) => {
+    const [athleteIdStr, setAthleteIdStr] = useState('');
+    return <form onSubmit={e => {
+        e.preventDefault();
+        onSearch(athleteIdStr);
+    }}>
+        <div className="field has-addons">
+            <div className="control">
+                <input
+                    className="input"
+                    type="text"
+                    placeholder="Enter athlete ID"
+                    value={athleteIdStr}
+                    onChange={e => setAthleteIdStr(e.target.value)} />
+            </div>
+            <fieldset disabled={athleteIdStr.trim().length === 0}>
+                <div className="control">
+                    <input className="button is-info" type="submit" value="Search" />
+                </div>
+            </fieldset>
+        </div>
+    </form>;
+};
+
+const Hero = ({children}) => <section className="hero is-primary is-bold">
+    <div className="hero-body">
+        <div className="container">
+            <div className="level">
+                <div className="level-left">
+                    <div className="level-item">
+                        <h1 className="title">
+                            Running Performance Visualizer
+                        </h1>
+                    </div>
+                </div>
+                <div className="level-right">
+                    <div className="level-item">
+                        {children}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>;
 
 const Footer = () => <footer className="footer">
-	<div className="content has-text-centered">
-		<p>
-		<strong>Running Performance Visualizer</strong> by Milan Misak
-		</p>
-	</div>
+    <div className="content has-text-centered">
+        <p>
+        <strong>Running Performance Visualizer</strong> by Milan Misak
+        </p>
+    </div>
 </footer>
 
-export default ({athleteData}) => <Fragment>
-	<Header />
-	<main className="container">
-		<AthleteDetail data={athleteData} />
-	</main>
-	<Footer />
+export default ({athleteData, onSearch}) => <Fragment>
+    <Hero>
+        <SearchForm onSearch={onSearch} />
+    </Hero>
+    <main className="container">
+        <AthleteDetail data={athleteData} />
+    </main>
+    <Footer />
 </Fragment>;
