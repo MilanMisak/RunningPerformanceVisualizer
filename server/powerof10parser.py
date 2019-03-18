@@ -9,6 +9,30 @@ from bs4 import BeautifulSoup
 
 TIME_REGEX = r'((?P<hours>\d+):)*?((?P<minutes>\d+):)?(?P<seconds>\d+)(\.(?P<frac>\d+))?$'
 
+def parse_profile(soup):
+    '''
+    Parses athlete profile/personal data such as name, club, etc.
+    '''
+    form = soup.select('#form1')[0]
+    matches = re.search(r'athleteid=(\d+)', form.get('action'))
+    athlete_id = matches[1] if matches else None
+
+    name = soup.select('.athleteprofilesubheader h2')[0].get_text().strip()
+
+    details = {}
+    for tr in soup.select('#cphBody_pnlAthleteDetails table:nth-child(2) table tr'):
+        tds = tr.find_all('td')
+        details[tds[0].get_text().replace(':', '')] = tds[1].get_text()
+
+    return {
+        'athlete_id': athlete_id,
+        'name': name,
+        'club': details.get('Club', 'N/A'),
+        'gender': details.get('Gender', 'N/A'),
+        'age_group': details.get('Age Group', 'N/A'),
+    }
+
+
 def parse_time(performance_str):
     '''
     Parses performance (time) string such as 12.98, 77:30 or 2:32:56
@@ -43,12 +67,10 @@ def parse_position(position_str):
     return int(m[0]) if m else None
 
 
-def parse_html(html):
+def parse_performances(soup):
     '''
-    Parses a Power of 10 athlete page HTML string and returns a map
-    of performances by event.
+    Parses a list of performances by event.
     '''
-    soup = BeautifulSoup(html, 'html.parser')
     trs = soup.select('#cphBody_pnlPerformances .alternatingrowspanel tr')
 
     performances_by_event = defaultdict(list)
@@ -84,3 +106,14 @@ def parse_html(html):
         performances_by_event[event] = sorted(performances, key=lambda perf: perf['time'])
 
     return performances_by_event
+
+
+def parse_html(html):
+    '''
+    Parses a Power of 10 athlete page HTML string and returns athlete data.
+    '''
+    soup = BeautifulSoup(html, 'html.parser')
+    return {
+        'profile': parse_profile(soup),
+        'performances': parse_performances(soup)
+    }

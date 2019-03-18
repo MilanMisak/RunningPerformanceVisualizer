@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './view/App';
-import {getAthletePerformances} from './api';
+import {getAthleteData} from './api';
 
 (async () => {
-	const performances = await getAthletePerformances(482);
-	ReactDOM.render(<App performances={performances} />, document.getElementById('root'));
+	const athleteData = await getAthleteData(482);
+	ReactDOM.render(<App athleteData={athleteData} />, document.getElementById('root'));
 })();

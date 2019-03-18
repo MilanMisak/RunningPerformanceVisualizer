@@ -38,9 +38,9 @@ def load_debug_athlete_data():
 
 
 @APP.route('/athlete/<athlete_id>')
-def get_athlete_performances(athlete_id):
+def get_athlete_data(athlete_id):
     '''
-    Returns performance data for an athlete.
+    Returns personal and performance data for an athlete.
     '''
     html = load_debug_athlete_data() if APP.config['DEBUG'] else fetch_athlete_data(athlete_id)
     response = jsonify(parse_html(html))

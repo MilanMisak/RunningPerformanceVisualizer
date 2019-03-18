@@ -2,7 +2,7 @@ import React, {Fragment} from 'react';
 import AthleteDetail from './AthleteDetail';
 import './App.scss';
 
-const Header = () => <section className="hero is-primary">
+const Header = () => <section className="hero is-primary is-bold">
 	<div className="hero-body">
 		<div className="container">
 			<h1 className="title">
@@ -23,10 +23,10 @@ const Footer = () => <footer className="footer">
 	</div>
 </footer>
 
-export default ({performances}) => <Fragment>
+export default ({athleteData}) => <Fragment>
 	<Header />
 	<main className="container">
-		<AthleteDetail performances={performances} />
+		<AthleteDetail data={athleteData} />
 	</main>
 	<Footer />
 </Fragment>;
