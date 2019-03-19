@@ -11,7 +11,7 @@ export default ({performances, selectedEvent}) => {
 		};
 	});
 
-	return <div>
+	return <div className="section">
 		<h4 className="title is-4">Event Performance History: {selectedEvent}</h4>
 
 		<ResponsiveContainer width="100%" height={400}>

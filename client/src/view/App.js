@@ -35,6 +35,7 @@ const Hero = ({children}) => <section className="hero is-primary is-bold">
                         <h1 className="title">
                             Running Performance Visualizer
                         </h1>
+						<span className="tag is-warning" style={{marginLeft: 10}}>BETA</span>
                     </div>
                 </div>
                 <div className="level-right">
@@ -50,7 +51,7 @@ const Hero = ({children}) => <section className="hero is-primary is-bold">
 const Footer = () => <footer className="footer">
     <div className="content has-text-centered">
         <p>
-        <strong>Running Performance Visualizer</strong> by Milan Misak
+			<strong>Running Performance Visualizer</strong> by Milan Misak, <a href="https://github.com/MilanMisak/RunningPerformanceVisualizer">GitHub</a>
         </p>
     </div>
 </footer>

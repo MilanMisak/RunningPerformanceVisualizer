@@ -11,7 +11,7 @@ export default React.memo(({data}) => {
 		[selectedEvent, setSelectedEvent] = useState(sortedEvents ? sortedEvents[0] : null);
 
 	return <Fragment>
-		<div className="level" style={{marginBottom: 35}}>
+		<div className="section level">
 			<div className="level-left">
 				<div className="level-item">
 					<Profile profile={data.profile} />

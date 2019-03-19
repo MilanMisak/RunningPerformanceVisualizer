@@ -76,7 +76,7 @@ export default ({performances, selectedEvent, setSelectedEvent}) => {
 	// Get a sorted list of events by distance
 	const events = Object.keys(performances).sort(compareDistance);
 
-	return <div className="event-breakdown">
+	return <div className="section event-breakdown">
 		<h4 className="title is-4">Event Breakdown by Year</h4>
 		<h6 className="subtitle is-6">Click on an event name to plot times</h6>
 
