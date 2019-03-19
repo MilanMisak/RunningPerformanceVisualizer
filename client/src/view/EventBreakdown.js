@@ -27,7 +27,7 @@ const createHeatmapGenerator = (bestTime, worstTime) => {
 	};
 };
 
-export default ({performances}) => {
+export default ({performances, selectedEvent, setSelectedEvent}) => {
 	// Find the earliest and latest year with any performances
 	let minYear = Number.MAX_VALUE,
 		maxYear = Number.MIN_VALUE,
@@ -90,10 +90,15 @@ export default ({performances}) => {
 						</tr>
 					</thead>
 					<tbody>
-						{events.map(ev => <tr key={ev}>
-							<td className="header">{ev}</td>
-							<td className="header-light">{renderPerformanceTime(bestByEvent[ev])}</td>
-						</tr>)}
+						{events.map(ev => {
+							const isSelected = ev === selectedEvent;
+							return <tr key={ev}>
+								<td
+									className={`header clickable${isSelected ? ' selected' : ''}`}
+									onClick={isSelected ? null : () => setSelectedEvent(ev)}>{ev}</td>
+								<td className="header-light">{renderPerformanceTime(bestByEvent[ev])}</td>
+							</tr>;
+						})}
 					</tbody>
 				</table>
 			</div>

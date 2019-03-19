@@ -37,5 +37,13 @@
 		td.selected {
 			background-color: hsl($primary-hue, 90%, 60%);
 		}
+
+		td.clickable:not(.selected) {
+			cursor: pointer;
+
+			&:hover {
+				background-color: hsl($primary-hue, 70%, 60%);
+			}
+		}
 	}
 }

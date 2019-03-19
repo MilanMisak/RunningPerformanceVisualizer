@@ -1,10 +1,15 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useState} from 'react';
+import {compareDistance} from '../utils';
 import Profile from './Profile';
 import TopEvents from './TopEvents';
 import TopCountries from './TopCountries';
 import EventBreakdown from './EventBreakdown';
+import EventPerformanceHistory from './EventPerformanceHistory';
 
 export default React.memo(({data}) => {
+	const sortedEvents = Object.keys(data.performances).sort(compareDistance),
+		[selectedEvent, setSelectedEvent] = useState(sortedEvents ? sortedEvents[0] : null);
+
 	return <Fragment>
 		<div className="level" style={{marginBottom: 35}}>
 			<div className="level-left">
@@ -21,6 +26,14 @@ export default React.memo(({data}) => {
 				</div>
 			</div>
 		</div>
-		<EventBreakdown performances={data.performances} />
+
+		<EventBreakdown
+			performances={data.performances}
+			selectedEvent={selectedEvent}
+			setSelectedEvent={setSelectedEvent} />
+
+		<EventPerformanceHistory
+			performances={data.performances}
+			selectedEvent={selectedEvent} />
 	</Fragment>;
 });
