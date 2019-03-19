@@ -1,6 +1,12 @@
 import React from 'react';
 
-const PROFILE_ROWS = [['club', 'Club'], ['gender', 'Gender'], ['age_group', 'Age Group']];
+const PROFILE_ROWS = [
+	['club', 'Club'],
+	['gender', 'Gender'],
+	['age_group', 'Age Group'],
+	['region', 'Region'],
+	['nation', 'Nation']
+];
 
 export default ({profile}) => <div className="card">
 	<header className="card-header">

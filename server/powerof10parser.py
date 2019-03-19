@@ -30,6 +30,8 @@ def parse_profile(soup):
         'club': details.get('Club', 'N/A'),
         'gender': details.get('Gender', 'N/A'),
         'age_group': details.get('Age Group', 'N/A'),
+        'region': details.get('Region', 'N/A'),
+        'nation': details.get('Nation', 'N/A')
     }
 
 
