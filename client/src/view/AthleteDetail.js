@@ -1,6 +1,7 @@
 import React, {Fragment} from 'react';
 import Profile from './Profile';
 import TopEvents from './TopEvents';
+import TopCountries from './TopCountries';
 import EventBreakdown from './EventBreakdown';
 
 export default React.memo(({data}) => {
@@ -12,6 +13,9 @@ export default React.memo(({data}) => {
 				</div>
 				<div className="level-item">
 					<TopEvents performances={data.performances} />
+				</div>
+				<div className="level-item">
+					<TopCountries performances={data.performances} />
 				</div>
 			</div>
 		</div>

@@ -39,6 +39,9 @@ def load_debug_athlete_data():
 
 @APP.route('/<path:path>')
 def get_static_file(path):
+    '''
+    Serves the client application static files.
+    '''
     return send_from_directory('../client/dist', path)
 
 

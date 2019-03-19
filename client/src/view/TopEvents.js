@@ -19,6 +19,6 @@ export default ({performances}) => {
 	data.push(['Others', others]);
 
 	return <div>
-		<PieChart data={data} legend="bottom" width={SIZE} height={SIZE} />
+		<PieChart data={data} legend="bottom" width={SIZE} height={SIZE} donut={true} />
 	</div>;
 };

@@ -67,6 +67,16 @@ def parse_position(position_str):
     return int(m[0]) if m else None
 
 
+COUNTRY_REGEX = r', ([A-Z]{3})$'
+def parse_country(venue_str):
+    '''
+    Parses countru from the venue string.
+    E.g. 'Ostrava, CZE' => 'CZE' and 'Edinburgh' => 'GBR'
+    '''
+    m = re.search(COUNTRY_REGEX, venue_str)
+    return m.group(1) if m else 'GBR'
+
+
 def parse_performances(soup):
     '''
     Parses a list of performances by event.
@@ -92,6 +102,7 @@ def parse_performances(soup):
         time_str = tds[1].get_text()
         position_str = tds[5].get_text()
         position = parse_position(position_str)
+        venue_str = tds[9].get_text()
         meeting_str = tds[10].get_text()
 
         performances_by_event[event].append({
@@ -99,6 +110,7 @@ def parse_performances(soup):
             'time_str': time_str,
             'date': date,
             'position': position,
+            'country': parse_country(venue_str),
             'meeting': meeting_str
         })
 
