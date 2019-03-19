@@ -11,10 +11,12 @@ export default React.memo(({data}) => {
 				<div className="level-item">
 					<Profile profile={data.profile} />
 				</div>
-				<div className="level-item">
+				<div className="level-item is-vertical">
+					<h4 className="title is-4">Top Events</h4>
 					<TopEvents performances={data.performances} />
 				</div>
-				<div className="level-item">
+				<div className="level-item is-vertical">
+					<h4 className="title is-4">Top Countries</h4>
 					<TopCountries performances={data.performances} />
 				</div>
 			</div>

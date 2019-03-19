@@ -14,3 +14,11 @@ main {
 	padding: 20px;
 	background-color: $main-background-color;
 }
+
+.level-item.is-vertical {
+	flex-direction: column;
+
+	.title {
+		margin-bottom: 15px;
+	}
+}
