@@ -52,5 +52,6 @@ def get_athlete_data(athlete_id):
     '''
     html = load_debug_athlete_data() if APP.config['DEBUG'] else fetch_athlete_data(athlete_id)
     response = jsonify(parse_html(html))
-    response.headers['Access-Control-Allow-Origin'] = '*'
+    if APP.config['DEBUG']:
+        response.headers['Access-Control-Allow-Origin'] = '*'
     return response
