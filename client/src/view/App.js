@@ -14,7 +14,7 @@ const SearchForm = ({onSearch}) => {
                 <input
                     className="input"
                     type="text"
-                    placeholder="Enter athlete ID"
+                    placeholder="Enter Power of 10 athlete ID"
                     value={athleteIdStr}
                     onChange={e => setAthleteIdStr(e.target.value)} />
             </div>
@@ -52,7 +52,7 @@ const Hero = ({children}) => <section className="hero is-primary is-bold">
 const Footer = () => <footer className="footer">
     <div className="content has-text-centered">
         <p>
-			<strong>Running Performance Visualizer</strong> by Milan Misak, <a href="https://github.com/MilanMisak/RunningPerformanceVisualizer">GitHub</a>
+			<strong>Running Performance Visualizer</strong> by Milan{'\u00A0'}Misak, <a href="https://github.com/MilanMisak/RunningPerformanceVisualizer">GitHub</a>
         </p>
     </div>
 </footer>

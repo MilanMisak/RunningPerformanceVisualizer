@@ -1,7 +1,7 @@
 import React from 'react';
 import format from 'date-fns/format';
 import parse from 'date-fns/parse';
-import {Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis} from 'recharts';
+import {CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis} from 'recharts';
 import './EventPerformanceHistory.scss';
 
 const formatDate = timestamp => format(parse(timestamp), 'YYYY-MM-DD')
@@ -43,9 +43,13 @@ export default ({performances, selectedEvent}) => {
 						domain={['auto', 'auto']}
 						tickFormatter={formatTime} />
 
+					<CartesianGrid stroke="#e5e5e5" />
+
 					<Line
 						dataKey={selectedEvent}
-						strokeWidth={2} />
+						strokeWidth={0}
+						dot={{stroke: '#996300', strokeWidth: 2}}
+						isAnimationActive={false} />
 
 					<Tooltip
 						labelFormatter={formatDate}
