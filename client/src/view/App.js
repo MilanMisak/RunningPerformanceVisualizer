@@ -1,9 +1,10 @@
 import React, {Fragment, useState} from 'react';
 import AthleteDetail from './AthleteDetail';
+import {INITIAL_ATHLETE_ID} from '../utils';
 import './App.scss';
 
 const SearchForm = ({onSearch}) => {
-    const [athleteIdStr, setAthleteIdStr] = useState('');
+    const [athleteIdStr, setAthleteIdStr] = useState(INITIAL_ATHLETE_ID + '');
     return <form onSubmit={e => {
         e.preventDefault();
         onSearch(athleteIdStr);

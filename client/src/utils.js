@@ -1,3 +1,5 @@
+export const INITIAL_ATHLETE_ID = 482;
+
 const METRES_IN_MILE = 1609;
 
 /*
@@ -31,6 +33,8 @@ const eventToMetres = eventName => {
 			return n;
 		case 'K':
 			return n * 1000;
+		case 'KMT':
+			return n * 1000;
 		case 'M':
 			return n * METRES_IN_MILE;
 		case 'Miles':
@@ -55,3 +59,9 @@ export const compareDistance = (eventA, eventB) => {
 		? eventA.localeCompare(eventB)  // Sort by name if same distance
 		: metresA - metresB;
 };
+
+/*
+ * Sorts events to return the most popular frequent one first.
+ */
+export const sortEventsByPopularity = performances => Object.keys(performances)
+	.sort((ev1, ev2) => performances[ev2].length - performances[ev1].length);

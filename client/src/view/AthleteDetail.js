@@ -1,14 +1,21 @@
 import React, {Fragment, useState} from 'react';
-import {compareDistance} from '../utils';
+import {sortEventsByPopularity} from '../utils';
 import Profile from './Profile';
 import TopEvents from './TopEvents';
 import TopCountries from './TopCountries';
 import EventBreakdown from './EventBreakdown';
 import EventPerformanceHistory from './EventPerformanceHistory';
 
+const getDefaultEvent = performances => {
+	const sortedEvents = sortEventsByPopularity(performances);
+	return sortedEvents ? sortedEvents[0] : null;
+}
+
 export default React.memo(({data}) => {
-	const sortedEvents = Object.keys(data.performances).sort(compareDistance),
-		[selectedEvent, setSelectedEvent] = useState(sortedEvents ? sortedEvents[0] : null);
+	let [selectedEvent, setSelectedEvent] = useState(getDefaultEvent(data.performances));
+	if (!(selectedEvent in data.performances)) {
+		selectedEvent = getDefaultEvent(data.performances);
+	}
 
 	return <Fragment>
 		<div className="section level">
@@ -32,8 +39,10 @@ export default React.memo(({data}) => {
 			selectedEvent={selectedEvent}
 			setSelectedEvent={setSelectedEvent} />
 
-		<EventPerformanceHistory
-			performances={data.performances}
-			selectedEvent={selectedEvent} />
+		{selectedEvent
+			? <EventPerformanceHistory
+				performances={data.performances}
+				selectedEvent={selectedEvent} />
+			: null}
 	</Fragment>;
 });

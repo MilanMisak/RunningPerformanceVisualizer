@@ -1,7 +1,7 @@
 import React from 'react';
 import format from 'date-fns/format';
 import parse from 'date-fns/parse';
-import {Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis} from 'recharts';
+import {Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis} from 'recharts';
 
 export default ({performances, selectedEvent}) => {
 	const data = performances[selectedEvent].sort((p1, p2) => p1.date.localeCompare(p2.date)).map(p => {
@@ -24,7 +24,6 @@ export default ({performances, selectedEvent}) => {
 				<YAxis domain={['auto', 'auto']}/>
 				<Line dataKey={selectedEvent} />
 				<Tooltip />
-				<Legend />
 			</LineChart>
 		</ResponsiveContainer>
 	</div>;
