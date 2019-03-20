@@ -8,6 +8,8 @@ const METRES_IN_MILE = 1609;
  * E.g. eventToMetres('5K') => 5000
  */
 const eventToMetres = eventName => {
+	eventName = eventName.replace(/(MT|R|NAD|W)$/, '');
+
 	switch (eventName) {
 	case 'Mile':
 		return METRES_IN_MILE;
@@ -22,18 +24,17 @@ const eventToMetres = eventName => {
 	}
 
 	// There is probably a number and some units, e.g. 5K
-	const match = eventName.match(/^(\d+)(.*)/);
+	const match = eventName.match(/^(\d+(\.\d+)?)(.*)/);
 	if (match === null) {
 		return 0;
 	}
 
-	const n = parseInt(match[1], 10);
-	switch (match[2]) {
+	const n = parseInt(match[1], 10),
+		unit = match[3];
+	switch (unit) {
 		case '':  // Just metres
 			return n;
 		case 'K':
-			return n * 1000;
-		case 'KMT':
 			return n * 1000;
 		case 'M':
 			return n * METRES_IN_MILE;
