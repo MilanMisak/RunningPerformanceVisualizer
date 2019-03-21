@@ -5,6 +5,9 @@ const path = require('path'),
 module.exports = (env, argv) => {
 	const mode = argv.mode || 'development';
 	return {
+		output: {
+			publicPath: mode === 'production' ? './' : '/'
+		},
 		module: {
 			rules: [
 				{
