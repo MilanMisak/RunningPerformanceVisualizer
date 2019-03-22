@@ -1,4 +1,5 @@
 import React from 'react';
+import addMinutes from 'date-fns/add_minutes';
 import format from 'date-fns/format';
 import parse from 'date-fns/parse';
 import {CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis} from 'recharts';
@@ -8,14 +9,14 @@ const formatDate = timestamp => format(parse(timestamp), 'YYYY-MM-DD')
 
 const formatTime = seconds => {
 	// Assume that performances of the same event will share
-	// scale so from each tick we can figure out format
+	// scale hence we can figure out format from each tick
 	const date = parse(seconds * 1000);
 	if (seconds < 10 * 60) {  // < 10 mins
 		return format(date, 'm:ss.SS');
 	} else if (seconds < 60 * 60) {  // < 1 hour
 		return format(date, 'm:ss');
 	} else {
-		return format(date, 'h:mm:ss');
+		return format(addMinutes(date, date.getTimezoneOffset()), 'h:mm:ss');
 	}
 };
 
