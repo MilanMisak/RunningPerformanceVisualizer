@@ -1,10 +1,8 @@
 FROM python:3.7.2-alpine3.9
 
 WORKDIR /usr/app
-COPY client client
-COPY server server
+COPY . .
 
-WORKDIR /usr/app/server
 RUN pip3 install pipenv
 RUN pipenv install
 
