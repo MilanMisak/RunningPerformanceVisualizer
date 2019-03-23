@@ -6,7 +6,7 @@ from flask import Flask, abort, jsonify, send_file, send_from_directory
 import requests
 from .powerof10parser import parse_html
 
-APP = Flask(__name__)
+app = Flask(__name__)  # pylint: disable=invalid-name
 
 def fetch(url):
     '''
@@ -37,14 +37,14 @@ def load_debug_athlete_data():
         return f.read()
 
 
-@APP.route('/')
+@app.route('/')
 def get_index():
     '''
     Serves the index.html file.
     '''
     return send_file('../client/dist/index.html')
 
-@APP.route('/<path:path>')
+@app.route('/<path:path>')
 def get_static_file(path):
     '''
     Serves the client application static files.
@@ -52,13 +52,13 @@ def get_static_file(path):
     return send_from_directory('../client/dist', path)
 
 
-@APP.route('/api/athlete/<athlete_id>')
+@app.route('/api/athlete/<athlete_id>')
 def get_athlete_data(athlete_id):
     '''
     Returns personal and performance data for an athlete.
     '''
-    html = load_debug_athlete_data() if APP.config['DEBUG'] else fetch_athlete_data(athlete_id)
+    html = load_debug_athlete_data() if app.config['DEBUG'] else fetch_athlete_data(athlete_id)
     response = jsonify(parse_html(html))
-    if APP.config['DEBUG']:
+    if app.config['DEBUG']:
         response.headers['Access-Control-Allow-Origin'] = '*'
     return response
