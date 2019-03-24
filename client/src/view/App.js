@@ -1,5 +1,5 @@
 import React, {Fragment, useState} from 'react';
-import AthleteDetail from './AthleteDetail';
+import AthleteDetail from './athlete-detail/AthleteDetail';
 import {INITIAL_ATHLETE_ID} from '../utils';
 import './App.scss';
 

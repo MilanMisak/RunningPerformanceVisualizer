@@ -3,7 +3,7 @@ import addMinutes from 'date-fns/add_minutes';
 import format from 'date-fns/format';
 import parse from 'date-fns/parse';
 import {CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis} from 'recharts';
-import './EventPerformanceHistory.scss';
+import './EventPerformanceHistorySection.scss';
 
 const formatDate = timestamp => format(parse(timestamp), 'YYYY-MM-DD')
 
@@ -28,7 +28,7 @@ export default ({performances, selectedEvent}) => {
 			[selectedEvent]: p.time
 		}));
 
-	return <div className="section event-performance-history">
+	return <div className="section event-performance-history-section">
 		<h4 className="title is-4">Event Performance History: {selectedEvent}</h4>
 
 		<div className="chart-wrapper">

@@ -1,8 +1,8 @@
 import React from 'react';
 import parse from 'date-fns/parse';
 import getYear from 'date-fns/get_year';
-import {compareDistance} from '../utils';
-import './EventBreakdown.scss';
+import {compareDistance} from '../../utils';
+import './EventBreakdownSection.scss';
 
 const renderPerformanceTime = performance => performance && performance.time_str;
 
@@ -11,19 +11,17 @@ const renderPerformanceTime = performance => performance && performance.time_str
  * colour for a heatmap that will compare the time of the performance to the
  * given best and worst time.
  */
-const createHeatmapGenerator = (bestTime, worstTime) => {
-	return performance => {
-		if (!performance) {
-			return {
-				backgroundColor: 'hsl(34, 0%, 95%)'
-			};
-		}
-		const frac = worstTime === bestTime ? 0 : (performance.time - bestTime) / (worstTime - bestTime);
+const createHeatmapGenerator = (bestTime, worstTime) => performance => {
+	if (!performance) {
 		return {
-			backgroundColor: `hsl(34, ${(1 - frac) * 50 + 50}%, ${frac * 40 + 50}%)`,
-			color: '#363636',
-			fontWeight: performance.time === bestTime ? 'bold' : null
+			backgroundColor: 'hsl(34, 0%, 95%)'
 		};
+	}
+	const frac = worstTime === bestTime ? 0 : (performance.time - bestTime) / (worstTime - bestTime);
+	return {
+		backgroundColor: `hsl(34, ${(1 - frac) * 50 + 50}%, ${frac * 40 + 50}%)`,
+		color: '#363636',
+		fontWeight: performance.time === bestTime ? 'bold' : null
 	};
 };
 
@@ -76,7 +74,7 @@ export default ({performances, selectedEvent, setSelectedEvent}) => {
 	// Get a sorted list of events by distance
 	const events = Object.keys(performances).sort(compareDistance);
 
-	return <div className="section event-breakdown">
+	return <div className="section event-breakdown-section">
 		<h4 className="title is-4">Event Breakdown by Year</h4>
 		<h6 className="subtitle is-6">Click on an event name to plot times</h6>
 
