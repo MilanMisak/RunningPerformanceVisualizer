@@ -95,8 +95,8 @@ def parse_performances(soup):
         if event == 'Event':
             continue
 
-        if event.endswith('XC') or event.endswith('L') or event.startswith('JT'):
-            # Ignore cross country, relays (with odd distances) and javelin throw?
+        if event.endswith('XC') or event.endswith('L') or event.startswith('JT') or event.startswith('DT'):
+            # Ignore cross country, relays (with odd distances), javelin throw, discus throw
             continue
 
         date_str = tds[11].get_text()
