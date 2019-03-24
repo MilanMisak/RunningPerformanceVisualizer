@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactChartkick, {LineChart, PieChart} from 'react-chartkick';
 import Chart from 'chart.js';
-import {sortEventsByPopularity} from '../../utils';
+import {sortEventsByPopularity} from '../utils';
 
 ReactChartkick.addAdapter(Chart);
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import parse from 'date-fns/parse';
 import getYear from 'date-fns/get_year';
-import {compareDistance} from '../../utils';
+import {compareDistance} from '../utils';
 import './EventBreakdownSection.scss';
 
 const renderPerformanceTime = performance => performance && performance.time_str;

@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './view/App';
+import App from './app/App';
 import {getAthleteData} from './api';
 import {INITIAL_ATHLETE_ID} from './utils';
 

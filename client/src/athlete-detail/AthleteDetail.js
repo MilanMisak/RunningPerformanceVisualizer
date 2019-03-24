@@ -1,5 +1,5 @@
 import React, {Fragment, useState} from 'react';
-import {sortEventsByPopularity} from '../../utils';
+import {sortEventsByPopularity} from '../utils';
 import OverviewSection from './OverviewSection';
 import EventBreakdownSection from './EventBreakdownSection';
 import EventPerformanceHistorySection from './EventPerformanceHistorySection';
