@@ -2,6 +2,7 @@
 
 @import "./constants";
 
+// Override Bulma variables
 $body-background-color: hsl($primary-hue, 10%, 90%);
 $footer-background-color: hsl($primary-hue, 70%, 80%);
 $footer-padding: 2rem 1.5rem 1.5rem;
@@ -16,12 +17,4 @@ $primary-invert: hsl($primary-hue, 50%, 10%);
 main {
 	padding: 20px;
 	background-color: $main-background-color;
-}
-
-.level-item.is-vertical {
-	flex-direction: column;
-
-	.title {
-		margin-bottom: 15px;
-	}
 }

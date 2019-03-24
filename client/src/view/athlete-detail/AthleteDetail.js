@@ -1,7 +1,6 @@
 import React, {Fragment, useState} from 'react';
 import {sortEventsByPopularity} from '../../utils';
-import ProfileCard from './ProfileCard';
-import {TopCountries, TopEvents} from './TopCharts';
+import OverviewSection from './OverviewSection';
 import EventBreakdownSection from './EventBreakdownSection';
 import EventPerformanceHistorySection from './EventPerformanceHistorySection';
 
@@ -19,21 +18,7 @@ export default React.memo(({data}) => {
 	}
 
 	return <Fragment>
-		<div className="section level">
-			<div className="level-left">
-				<div className="level-item">
-					<ProfileCard profile={data.profile} />
-				</div>
-				<div className="level-item is-vertical">
-					<h4 className="title is-4">Top Events</h4>
-					<TopEvents performances={data.performances} />
-				</div>
-				<div className="level-item is-vertical">
-					<h4 className="title is-4">Top Countries</h4>
-					<TopCountries performances={data.performances} />
-				</div>
-			</div>
-		</div>
+		<OverviewSection {...data} />
 
 		<EventBreakdownSection
 			performances={data.performances}

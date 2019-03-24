@@ -1,0 +1,9 @@
+.overview-section {
+	.level-item.is-vertical {
+		flex-direction: column;
+
+		.title {
+			margin-bottom: 15px;
+		}
+	}
+}
