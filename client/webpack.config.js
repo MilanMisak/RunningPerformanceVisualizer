@@ -1,12 +1,15 @@
 const path = require('path'),
-	HtmlWebpackPlugin = require('html-webpack-plugin');
-	MiniCssExtractPlugin = require('mini-css-extract-plugin');
+	HtmlWebpackPlugin = require('html-webpack-plugin'),
+	MiniCssExtractPlugin = require('mini-css-extract-plugin'),
+	TerserJSPlugin = require('terser-webpack-plugin'),
+	OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 module.exports = (env, argv) => {
 	const mode = argv.mode || 'development';
 	return {
 		output: {
-			publicPath: mode === 'production' ? './' : '/'
+			publicPath: mode === 'production' ? './' : '/',
+			filename: '[name].[hash].js'
 		},
 		module: {
 			rules: [
@@ -36,7 +39,21 @@ module.exports = (env, argv) => {
 			new HtmlWebpackPlugin({
 				template: 'src/index.html'
 			}),
-			new MiniCssExtractPlugin()
-		]
+			new MiniCssExtractPlugin({
+				filename: '[name].[hash].css'
+			}),
+			new OptimizeCSSAssetsPlugin({
+				cssProcessorPluginOptions: {
+					preset: ['default', {discardComments: {removeAll: true}}],
+				}
+			})
+		],
+		optimization: mode === 'production'
+			? {
+				minimizer: [
+					new TerserJSPlugin()
+				]
+			}
+			: {}
 	};
 };
