@@ -9,7 +9,8 @@ module.exports = (env, argv) => {
 	return {
 		output: {
 			publicPath: mode === 'production' ? './' : '/',
-			filename: '[name].[hash].js'
+			filename: '[name].[chunkhash].js',
+			chunkFilename: '[name].[chunkhash].js'
 		},
 		module: {
 			rules: [
@@ -40,7 +41,7 @@ module.exports = (env, argv) => {
 				template: 'src/index.html'
 			}),
 			new MiniCssExtractPlugin({
-				filename: '[name].[hash].css'
+				filename: '[name].[contenthash].css'
 			}),
 			new OptimizeCSSAssetsPlugin({
 				cssProcessorPluginOptions: {
