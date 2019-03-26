@@ -12,7 +12,16 @@ $card-header-background-color: hsl($primary-hue, 10%, 90%);
 $primary: hsl($primary-hue, 90%, 51%);
 $primary-invert: hsl($primary-hue, 50%, 10%);
 
-@import "~bulma/bulma";
+@import "../../node_modules/bulma/sass/utilities/_all.sass";
+@import "../../node_modules/bulma/sass/base/_all.sass";
+@import "../../node_modules/bulma/sass/elements/button.sass";
+@import "../../node_modules/bulma/sass/elements/container.sass";
+@import "../../node_modules/bulma/sass/elements/form.sass";
+@import "../../node_modules/bulma/sass/elements/table.sass";
+@import "../../node_modules/bulma/sass/elements/title.sass";
+@import "../../node_modules/bulma/sass/components/card.sass";
+@import "../../node_modules/bulma/sass/components/level.sass";
+@import "../../node_modules/bulma/sass/layout/_all.sass";
 
 main {
 	padding: 20px;
