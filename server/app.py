@@ -45,4 +45,6 @@ def get_athlete_data(athlete_id):
     response = jsonify(parse_html(html))
     if app.config['DEBUG']:
         response.headers['Access-Control-Allow-Origin'] = '*'
+    else:
+        response.headers['Cache-Control'] = 'must-revalidate, max-age=3600'
     return response
