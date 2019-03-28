@@ -1,19 +1,24 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, Suspense} from 'react';
 import {connect} from 'react-redux';
 import Hero from './Hero';
 import Footer from './Footer';
 import SearchForm from './SearchForm';
-import AthleteDetail from '../athlete-detail/AthleteDetail';
 import './App.scss';
+
+const Loader = () => 'Loading\u2026';
+
+const AthleteDetail = React.lazy(() => import(/* webpackChunkName: "athlete-detail" */ '../athlete-detail/AthleteDetail'));
 
 const App = ({athleteData, onSearch}) => <Fragment>
     <Hero>
         <SearchForm onSearch={onSearch} />
     </Hero>
     <main className="container">
-		{athleteData
-			? <AthleteDetail data={athleteData} />
-			: 'Loading\u2026'}
+		<Suspense fallback={<Loader />}>
+			{athleteData
+				? <AthleteDetail data={athleteData} />
+				: <Loader />}
+		</Suspense>
     </main>
     <Footer />
 </Fragment>;
