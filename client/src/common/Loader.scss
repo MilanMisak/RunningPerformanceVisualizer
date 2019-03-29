@@ -1,0 +1,22 @@
+@import "../app/constants.scss";
+
+.loader {
+	$size: 30px;
+	$border-size: 5px;
+
+	width: $size;
+	height: $size;
+	border: $border-size solid hsl($primary-hue, 40%, 90%);
+	border-top: $border-size solid hsl($primary-hue, 80%, 50%);
+	border-radius: 50%;
+	animation: rotate 2s linear infinite;
+}
+
+@keyframes rotate {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}

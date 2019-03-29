@@ -3,9 +3,8 @@ import {connect} from 'react-redux';
 import Hero from './Hero';
 import Footer from './Footer';
 import SearchForm from './SearchForm';
+import Loader from '../common/Loader';
 import './App.scss';
-
-const Loader = () => 'Loading\u2026';
 
 const AthleteDetail = React.lazy(() => import(/* webpackChunkName: "athlete-detail" */ '../athlete-detail/AthleteDetail'));
 
