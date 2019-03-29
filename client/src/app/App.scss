@@ -1,6 +1,6 @@
 @charset "utf-8";
 
-@import "./constants";
+@import "../common/constants";
 
 // Override Bulma variables
 $body-background-color: hsl($primary-hue, 10%, 90%);
