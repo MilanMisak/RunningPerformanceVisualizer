@@ -25,5 +25,6 @@ $primary-invert: hsl($primary-hue, 50%, 10%);
 
 main {
 	padding: 20px;
+	min-height: 400px;
 	background-color: $main-background-color;
 }
