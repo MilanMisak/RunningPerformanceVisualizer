@@ -1,24 +1,37 @@
 import React from 'react';
 import ReactChartkick, {LineChart, PieChart} from 'react-chartkick';
 import Chart from 'chart.js';
+import getYear from 'date-fns/get_year';
+import parse from 'date-fns/parse';
 import {sortEventsByPopularity} from '../utils';
 
 ReactChartkick.addAdapter(Chart);
 
 const SIZE = 250;
+const DonutChart = ({data}) => <PieChart data={data} legend="bottom" width={SIZE} height={SIZE} donut={true} />;
+
+const TOP_N = 5;
+const getDonutChartData = (valueByKey, sortedKeys) => {
+	const others = sortedKeys
+			.slice(TOP_N)
+			.reduce((memo, key) => memo + valueByKey[key], 0),
+		data = sortedKeys
+			.slice(0, TOP_N)
+			.map(key => [key, valueByKey[key]]);
+	data.push(['Others', others]);
+	return data;
+};
 
 export const TopEvents = ({performances}) => {
-	const sortedEvents = sortEventsByPopularity(performances),
-		others = sortedEvents
-			.slice(5)
-			.reduce((memo, ev) => memo + performances[ev].length, 0),
-		data = sortedEvents
-			.slice(0, 5)
-			.map(ev => [ev, performances[ev].length]);
-	data.push(['Others', others]);
+	const performanceCountByEvent = Object.keys(performances)
+			.reduce((memo, ev) => {
+				memo[ev] = performances[ev].length;
+				return memo;
+			}, {}),
+		sortedEvents = sortEventsByPopularity(performances);
 
 	return <div>
-		<PieChart data={data} legend="bottom" width={SIZE} height={SIZE} donut={true} />
+		<DonutChart data={getDonutChartData(performanceCountByEvent, sortedEvents)} />
 	</div>;
 };
 
@@ -33,16 +46,28 @@ export const TopCountries = ({performances}) => {
 				return memo;
 			}, memo), {}),
 		sortedCountries = Object.keys(performanceCountPerCountry)
-			.sort((c1, c2) => performanceCountPerCountry[c2] - performanceCountPerCountry[c1]),
-		others = sortedCountries
-			.slice(5)
-			.reduce((memo, c) => memo + performanceCountPerCountry[c], 0),
-		data = sortedCountries
-			.slice(0, 5)
-			.map(c => [c, performanceCountPerCountry[c]]);
-	data.push(['Others', others]);
+			.sort((c1, c2) => performanceCountPerCountry[c2] - performanceCountPerCountry[c1]);
 
 	return <div>
-		<PieChart data={data} legend="bottom" width={SIZE} height={SIZE} donut={true} />
+		<DonutChart data={getDonutChartData(performanceCountPerCountry, sortedCountries)} />
+	</div>;
+};
+
+export const TopYears = ({performances}) => {
+	const performanceCountPerYear = Object.keys(performances)
+			.reduce((memo, ev) => performances[ev].reduce((memo, {date}) => {
+				const year = getYear(parse(date));
+				if (year in memo) {
+					memo[year]++;
+				} else {
+					memo[year] = 1;
+				}
+				return memo;
+			}, memo), {}),
+		sortedYears = Object.keys(performanceCountPerYear)
+			.sort((c1, c2) => performanceCountPerYear[c2] - performanceCountPerYear[c1]);
+
+	return <div>
+		<DonutChart data={getDonutChartData(performanceCountPerYear, sortedYears)} />
 	</div>;
 };
