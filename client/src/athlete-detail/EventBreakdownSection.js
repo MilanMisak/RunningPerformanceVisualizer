@@ -1,29 +1,10 @@
 import React from 'react';
 import parse from 'date-fns/parse';
 import getYear from 'date-fns/get_year';
-import {compareDistance} from '../utils';
+import {compareDistance, createHeatmapGenerator} from '../utils';
 import './EventBreakdownSection.scss';
 
 const renderPerformanceTime = performance => performance && performance.time_str;
-
-/*
- * Returns a function which given a performance (optional) returns a background
- * colour for a heatmap that will compare the time of the performance to the
- * given best and worst time.
- */
-const createHeatmapGenerator = (bestTime, worstTime) => performance => {
-	if (!performance) {
-		return {
-			backgroundColor: 'hsl(34, 0%, 95%)'
-		};
-	}
-	const frac = worstTime === bestTime ? 0 : (performance.time - bestTime) / (worstTime - bestTime);
-	return {
-		backgroundColor: `hsl(34, ${(1 - frac) * 50 + 50}%, ${frac * 40 + 50}%)`,
-		color: '#363636',
-		fontWeight: performance.time === bestTime ? 'bold' : null
-	};
-};
 
 export default ({performances, selectedEvent, setSelectedEvent}) => {
 	// Find the earliest and latest year with any performances
@@ -111,7 +92,7 @@ export default ({performances, selectedEvent, setSelectedEvent}) => {
 					</thead>
 					<tbody>
 						{events.map(ev => {
-							const getHeatmapStyle = createHeatmapGenerator(bestByEvent[ev].time, worstByEvent[ev].time);
+							const getHeatmapStyle = createHeatmapGenerator(bestByEvent[ev].time, worstByEvent[ev].time, 'time');
 							return <tr key={ev}>
 								<td className="header-light">{renderPerformanceTime(lastByEvent[ev])}</td>
 								{years.map(year => {

@@ -66,3 +66,24 @@ export const compareDistance = (eventA, eventB) => {
  */
 export const sortEventsByPopularity = performances => Object.keys(performances)
 	.sort((ev1, ev2) => performances[ev2].length - performances[ev1].length);
+
+/*
+ * Returns a function which given a performance (optional) returns a background
+ * colour for a heatmap that will compare a certain metric of the performance
+ * (given by 'key') to the given best and worst value of the metric.
+ *
+ * This works best for metrics where lower values are considered better.
+ */
+export const createHeatmapGenerator = (best, worst, key) => performance => {
+	if (!performance) {
+		return {
+			backgroundColor: 'hsl(34, 0%, 95%)'
+		};
+	}
+	const frac = worst === best ? 0 : (performance[key] - best) / (worst - best);
+	return {
+		backgroundColor: `hsl(34, ${(1 - frac) * 50 + 50}%, ${frac * 40 + 50}%)`,
+		color: '#363636',
+		fontWeight: performance[key] === best ? 'bold' : null
+	};
+};
