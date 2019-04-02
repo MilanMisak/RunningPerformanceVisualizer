@@ -9,7 +9,7 @@ import App from './app/App';
 import {INITIAL_ATHLETE_ID} from './utils';
 
 const sagaMiddleware = createSagaMiddleware(),
-	store = createStore(reducer, applyMiddleware(sagaMiddleware));
+    store = createStore(reducer, applyMiddleware(sagaMiddleware));
 
 sagaMiddleware.run(rootSaga);
 

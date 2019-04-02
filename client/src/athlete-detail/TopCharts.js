@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactChartkick, {LineChart, PieChart} from 'react-chartkick';
+import ReactChartkick, {PieChart} from 'react-chartkick';
 import Chart from 'chart.js';
 import getYear from 'date-fns/get_year';
 import parse from 'date-fns/parse';
@@ -12,62 +12,62 @@ const DonutChart = ({data}) => <PieChart data={data} legend="bottom" width={SIZE
 
 const TOP_N = 5;
 const getDonutChartData = (valueByKey, sortedKeys) => {
-	const others = sortedKeys
-			.slice(TOP_N)
-			.reduce((memo, key) => memo + valueByKey[key], 0),
-		data = sortedKeys
-			.slice(0, TOP_N)
-			.map(key => [key, valueByKey[key]]);
-	data.push(['Others', others]);
-	return data;
+    const others = sortedKeys
+            .slice(TOP_N)
+            .reduce((memo, key) => memo + valueByKey[key], 0),
+        data = sortedKeys
+            .slice(0, TOP_N)
+            .map(key => [key, valueByKey[key]]);
+    data.push(['Others', others]);
+    return data;
 };
 
 export const TopEvents = ({performances}) => {
-	const performanceCountByEvent = Object.keys(performances)
-			.reduce((memo, ev) => {
-				memo[ev] = performances[ev].length;
-				return memo;
-			}, {}),
-		sortedEvents = sortEventsByPopularity(performances);
+    const performanceCountByEvent = Object.keys(performances)
+            .reduce((memo, ev) => {
+                memo[ev] = performances[ev].length;
+                return memo;
+            }, {}),
+        sortedEvents = sortEventsByPopularity(performances);
 
-	return <div>
-		<DonutChart data={getDonutChartData(performanceCountByEvent, sortedEvents)} />
-	</div>;
+    return <div>
+        <DonutChart data={getDonutChartData(performanceCountByEvent, sortedEvents)} />
+    </div>;
 };
 
 export const TopCountries = ({performances}) => {
-	const performanceCountPerCountry = Object.keys(performances)
-			.reduce((memo, ev) => performances[ev].reduce((memo, {country}) => {
-				if (country in memo) {
-					memo[country]++;
-				} else {
-					memo[country] = 1;
-				}
-				return memo;
-			}, memo), {}),
-		sortedCountries = Object.keys(performanceCountPerCountry)
-			.sort((c1, c2) => performanceCountPerCountry[c2] - performanceCountPerCountry[c1]);
+    const performanceCountPerCountry = Object.keys(performances)
+            .reduce((memo, ev) => performances[ev].reduce((memo, {country}) => {
+                if (country in memo) {
+                    memo[country]++;
+                } else {
+                    memo[country] = 1;
+                }
+                return memo;
+            }, memo), {}),
+        sortedCountries = Object.keys(performanceCountPerCountry)
+            .sort((c1, c2) => performanceCountPerCountry[c2] - performanceCountPerCountry[c1]);
 
-	return <div>
-		<DonutChart data={getDonutChartData(performanceCountPerCountry, sortedCountries)} />
-	</div>;
+    return <div>
+        <DonutChart data={getDonutChartData(performanceCountPerCountry, sortedCountries)} />
+    </div>;
 };
 
 export const TopYears = ({performances}) => {
-	const performanceCountPerYear = Object.keys(performances)
-			.reduce((memo, ev) => performances[ev].reduce((memo, {date}) => {
-				const year = getYear(parse(date));
-				if (year in memo) {
-					memo[year]++;
-				} else {
-					memo[year] = 1;
-				}
-				return memo;
-			}, memo), {}),
-		sortedYears = Object.keys(performanceCountPerYear)
-			.sort((c1, c2) => performanceCountPerYear[c2] - performanceCountPerYear[c1]);
+    const performanceCountPerYear = Object.keys(performances)
+            .reduce((memo, ev) => performances[ev].reduce((memo, {date}) => {
+                const year = getYear(parse(date));
+                if (year in memo) {
+                    memo[year]++;
+                } else {
+                    memo[year] = 1;
+                }
+                return memo;
+            }, memo), {}),
+        sortedYears = Object.keys(performanceCountPerYear)
+            .sort((c1, c2) => performanceCountPerYear[c2] - performanceCountPerYear[c1]);
 
-	return <div>
-		<DonutChart data={getDonutChartData(performanceCountPerYear, sortedYears)} />
-	</div>;
+    return <div>
+        <DonutChart data={getDonutChartData(performanceCountPerYear, sortedYears)} />
+    </div>;
 };
