@@ -1,11 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import addMinutes from 'date-fns/add_minutes';
 import format from 'date-fns/format';
 import parse from 'date-fns/parse';
 import {CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis} from 'recharts';
 import './EventPerformanceHistorySection.scss';
 
-const formatDate = timestamp => format(parse(timestamp), 'YYYY-MM-DD')
+const formatDate = timestamp => format(parse(timestamp), 'YYYY-MM-DD');
 
 const formatTime = seconds => {
     // Assume that performances of the same event will share
@@ -20,7 +21,7 @@ const formatTime = seconds => {
     }
 };
 
-export default ({performances, selectedEvent}) => {
+export default function EventPerformanceHistorySection({performances, selectedEvent}) {
     const data = performances[selectedEvent]
         .sort((p1, p2) => p1.date.localeCompare(p2.date))
         .map(p => ({
@@ -59,4 +60,8 @@ export default ({performances, selectedEvent}) => {
             </ResponsiveContainer>
         </div>
     </div>;
+}
+EventPerformanceHistorySection.propTypes = {
+    performances: PropTypes.object.isRequired,
+    selectedEvent: PropTypes.string
 };

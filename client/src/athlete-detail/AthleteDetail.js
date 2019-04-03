@@ -1,4 +1,5 @@
 import React, {Fragment, useState} from 'react';
+import PropTypes from 'prop-types';
 import {sortEventsByPopularity} from '../utils';
 import OverviewSection from './OverviewSection';
 import EventBreakdownSection from './EventBreakdownSection';
@@ -7,9 +8,9 @@ import EventPerformanceHistorySection from './EventPerformanceHistorySection';
 const getDefaultEvent = performances => {
     const sortedEvents = sortEventsByPopularity(performances);
     return sortedEvents ? sortedEvents[0] : null;
-}
+};
 
-export default React.memo(({data}) => {
+function AthleteDetail({data}) {
     let [selectedEvent, setSelectedEvent] = useState(getDefaultEvent(data.performances));
     if (!(selectedEvent in data.performances)) {
         // Reset selected event if the current one is not available
@@ -31,4 +32,9 @@ export default React.memo(({data}) => {
                 selectedEvent={selectedEvent} />
             : null}
     </Fragment>;
-});
+}
+AthleteDetail.propTypes = {
+    data: PropTypes.object.isRequired
+};
+
+export default React.memo(AthleteDetail);

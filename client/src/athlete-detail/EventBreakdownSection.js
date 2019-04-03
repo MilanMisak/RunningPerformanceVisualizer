@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import parse from 'date-fns/parse';
 import getYear from 'date-fns/get_year';
 import {compareDistance, createHeatmapGenerator} from '../utils';
@@ -6,7 +7,7 @@ import './EventBreakdownSection.scss';
 
 const renderPerformanceTime = performance => performance && performance.time_str;
 
-export default ({performances, selectedEvent, setSelectedEvent}) => {
+export default function EventBreakdownSection({performances, selectedEvent, setSelectedEvent}) {
     // Find the earliest and latest year with any performances
     let minYear = Number.MAX_VALUE,
         maxYear = Number.MIN_VALUE,
@@ -46,7 +47,7 @@ export default ({performances, selectedEvent, setSelectedEvent}) => {
                     || performance.date > lastByEvent[ev].date) {
                 lastByEvent[ev] = performance;
             }
-        })
+        });
     });
 
     // Get an array of years in the range in descending order
@@ -108,4 +109,9 @@ export default ({performances, selectedEvent, setSelectedEvent}) => {
             </div>
         </div>
     </div>;
+}
+EventBreakdownSection.propTypes = {
+    performances: PropTypes.object.isRequired,
+    selectedEvent: PropTypes.string,
+    setSelectedEvent: PropTypes.func.isRequired
 };

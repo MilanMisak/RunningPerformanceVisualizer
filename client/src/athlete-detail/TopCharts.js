@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ReactChartkick, {PieChart} from 'react-chartkick';
 import Chart from 'chart.js';
 import getYear from 'date-fns/get_year';
@@ -8,7 +9,12 @@ import {sortEventsByPopularity} from '../utils';
 ReactChartkick.addAdapter(Chart);
 
 const SIZE = 250;
-const DonutChart = ({data}) => <PieChart data={data} legend="bottom" width={SIZE} height={SIZE} donut={true} />;
+function DonutChart({data}) {
+    return <PieChart data={data} legend="bottom" width={SIZE} height={SIZE} donut={true} />;
+}
+DonutChart.propTypes = {
+    data: PropTypes.array.isRequired
+};
 
 const TOP_N = 5;
 const getDonutChartData = (valueByKey, sortedKeys) => {
@@ -22,7 +28,7 @@ const getDonutChartData = (valueByKey, sortedKeys) => {
     return data;
 };
 
-export const TopEvents = ({performances}) => {
+export function TopEvents({performances}) {
     const performanceCountByEvent = Object.keys(performances)
             .reduce((memo, ev) => {
                 memo[ev] = performances[ev].length;
@@ -33,9 +39,9 @@ export const TopEvents = ({performances}) => {
     return <div>
         <DonutChart data={getDonutChartData(performanceCountByEvent, sortedEvents)} />
     </div>;
-};
+}
 
-export const TopCountries = ({performances}) => {
+export function TopCountries({performances}) {
     const performanceCountPerCountry = Object.keys(performances)
             .reduce((memo, ev) => performances[ev].reduce((memo, {country}) => {
                 if (country in memo) {
@@ -51,9 +57,9 @@ export const TopCountries = ({performances}) => {
     return <div>
         <DonutChart data={getDonutChartData(performanceCountPerCountry, sortedCountries)} />
     </div>;
-};
+}
 
-export const TopYears = ({performances}) => {
+export function TopYears({performances}) {
     const performanceCountPerYear = Object.keys(performances)
             .reduce((memo, ev) => performances[ev].reduce((memo, {date}) => {
                 const year = getYear(parse(date));
@@ -70,4 +76,8 @@ export const TopYears = ({performances}) => {
     return <div>
         <DonutChart data={getDonutChartData(performanceCountPerYear, sortedYears)} />
     </div>;
+}
+
+TopEvents.propTypes = TopCountries.propTypes = TopYears.propTypes = {
+    performances: PropTypes.object.isRequired
 };

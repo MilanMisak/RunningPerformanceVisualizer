@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
+import PropTypes from 'prop-types';
 import {INITIAL_ATHLETE_ID} from '../utils';
 
-export default ({onSearch}) => {
+export default function SearchForm({onSearch}) {
     const [athleteIdStr, setAthleteIdStr] = useState(INITIAL_ATHLETE_ID + '');
     return <form onSubmit={e => {
         e.preventDefault();
@@ -23,4 +24,7 @@ export default ({onSearch}) => {
             </fieldset>
         </div>
     </form>;
+}
+SearchForm.propTypes = {
+    onSearch: PropTypes.func.isRequired
 };
