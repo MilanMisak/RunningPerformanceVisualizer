@@ -27,5 +27,5 @@ export default function OverviewSection({profile, performances}) {
 }
 OverviewSection.propTypes = {
     profile: PropTypes.object.isRequired,
-    performances: PropTypes.array.isRequired
+    performances: PropTypes.object.isRequired
 };
