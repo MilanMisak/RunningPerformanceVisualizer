@@ -10,3 +10,4 @@ Available at [https://milanmisak.com/running-performance-visualizer](https://mil
 - show more parkrun stats (top parkruns, PB by venue)
 - optimize for mobile
 - more user-friendly (error handling, spinner, etc)
+- implement athlete comparison
